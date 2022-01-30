@@ -1,4 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
+const dotenv = require("dotenv");
+dotenv.config();
+console.log("infura endpoint", process.env.REACT_APP_INFURA_ENDPOINT);
+console.log("priv_key", process.env.REACT_APP_PRIV_KEY);
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -17,13 +21,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  defaultNetwork: "hardhat",
   paths: {
     artifacts: "./src/artifacts",
   },
   networks: {
-    hardhat: {
-      chainId: 1337,
+    hardhat: {},
+    rinkeby: {
+      url: process.env.REACT_APP_INFURA_ENDPOINT,
+      accounts: [process.env.REACT_APP_PRIV_KEY],
     },
   },
+  solidity: "0.8.4",
 };
